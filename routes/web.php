@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//department route
+Route::get('departments','DepartmentController@index');
+Route::get('department/create','DepartmentController@create');
+Route::post('department/save','DepartmentController@save');
+Route::get('department/edit/{id}','DepartmentController@edit');
+Route::post('department/update/{id}','DepartmentController@update');
+Route::delete('department/delete/{id}','DepartmentController@delete');
