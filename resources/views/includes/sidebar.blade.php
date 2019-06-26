@@ -7,7 +7,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row"> Manage Student</th>
+                    <th scope="row"> <a href=" {{ url('students') }} ">  Manage Student</a></th>
                   </tr>
                   <tr>
                     <th scope="row"> Manage Teachers</th>
@@ -18,18 +18,18 @@
                   <tr>
                   <th scope="row"> <a href=" {{ url('departments') }} "> Manage Departments </a></th>
                  </tr>
-                 <tr>
+                 {{-- <tr>
                     <th scope="row"> School Fees</th>
-                 </tr>
+                 </tr> --}}
                  <tr>
-                    <th scope="row"> Class Schedule</th>
+                    <th scope="row"> <a href=" {{ url('classes') }} ">Class Schedule</a></th>
                  </tr>
-                 <tr>
+                 {{-- <tr>
                     <th scope="row"> <a href=""> Result Publish</a></th>
                  </tr>
                  <tr>
                      <th scope="row"><a href=""> Reports </a></th> 
-                 </tr>
+                 </tr> --}}
                 </tbody>
               </table>
     </div>
