@@ -2,7 +2,7 @@
         <table class="table table-bordered">
                 <thead class="thead-dark ">
                   <tr>
-                    <th scope="col"> Sidebar</th>
+                    <th scope="col"> Admin Panel</th>
                   </tr>
                 </thead>
                 <tbody>
