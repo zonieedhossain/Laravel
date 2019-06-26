@@ -43,7 +43,7 @@
                 <tr>
                 <th scope="row">{{ $student->id }}</th>
                   <td>{{ $student->name }}</td>
-                <td><img src="{{ url('uploads/students/'),$student->image }}" style="height: 50px; width=50px ;"></td>
+                <td><img src="/uploads/students{{ $student->image }}" style="height: 50px; width=50px ;"></td>
                   <td>{{ $student->phone_num }}</td>
                   <td>{{ $student->email }}</td>
                   <td>{{ $student->roll}}</td>

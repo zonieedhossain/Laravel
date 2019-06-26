@@ -14,14 +14,14 @@
                               </div>
                         @endif
                         <div class="card-body">
-                        <form method="POST" action=" {{ url('student/save')}} ">
+                        <form method="post" action=" {{ url('student/save')}}"  enctype="multipart/form-data">
                                 @csrf
-        
+                                
                                 <div class="form-group row">
                                     <label for="name" class="col-md-4 col-form-label text-md-right">Full Name</label>
         
                                     <div class="col-md-6">
-                                        <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        <input id="name" type="name" enctype="multipart/form-data" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
         
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -86,8 +86,8 @@
                                                         <label for="image" class="col-md-4 col-form-label text-md-right">Image Upload</label>
                             
                                                         <div class="col-md-6">
-                                                            <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" required autocomplete="image" autofocus>
-                            
+                                                            <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" required autocomplete="image" autofocus required>
+                                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                             @error('image')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>

@@ -8,8 +8,20 @@ use App\Classes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Exceptions\Handler;
-use Intervention\Image\Facades\Image;
-use Intervention\Image\ImageServiceProvider;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
+use Auth;
+
+
+use SplFileInfo;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
+use App\Http\Requests;
+use Intervention\Image\ImageManagerStatic as Image;
+
+
+
 
 class StudentsController extends Controller
 {
@@ -27,19 +39,56 @@ class StudentsController extends Controller
     }
     public function save(Request $request)
     {
-        
+      
         $this->validate($request, [
-            'roll' => 'required',
-            'image' => 'required',
+            'name' =>'required',
+            'phone_num' => 'required',
+            'email' => 'required',
+            'roll' =>'required',
+            'reg_no' => 'required',
+            'image' => 'required', // required|image|mimes:jpeg,png,jpg,gif,svg|max:2048;
+            'department_name' => 'required',
+            'class_name' => 'required',
+            'father_name' => 'required',
+            'mother_name' =>'required',
+            'address' => 'required',
+            'guardian_num' => 'required',
+           
         ]);
-       
+    
+        // $image = $request->file('image');
+        // $new_name =rand(). '.' . $image->getClientOriginalExtension();
+        // $image->move(public_path('students'),$new_name);
+        // $form_data=array(
+        //     'name' => $request->name,
+        //         'phone_num' => $request->phone_num,
+        //         'email' => $request->email,
+        //         'roll' => $request->roll,
+        //         'reg_no' => $request->reg_no,
+        //         'image' => $new_name,
+        //         'department_name' => $request->department_name,
+        //         'class_name' => $request->class_name,
+        //         'father_name' => $request->father_name,
+        //         'mother_name' => $request->mother_name,
+        //         'address' => $request->address,
+        //         'guardian_num' => $request->guardian_num,
+                
+        // );
+
+        // Crud::create($form_data);
+
+        // Students::create($request->all());
+   
         $stdImage='';
+      
         
-         dd($request->hasFile($image));  
-        if ($request->hasFile($image)){
-            $image = $request->file('image');            
-            $filename=time() .'.'. request()->$image->getClientOriginalExtension();
-            Image::make($image)->save(public_path('/uploads/students/'.$filename));
+        if ($request->hasFile('image')){  
+             
+            $image = $request->file('image'); 
+                       
+            $filename=time() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->save(public_path('/uploads/students'.$filename));
+         
             $stdImage=$filename;
         }
       
