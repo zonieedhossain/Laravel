@@ -9,7 +9,14 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col"> <a href=" {{ url('student/create')}} "> <button type="button" class="btn btn-dark">Add New Student</button></a></th>
-                   
+                    <th> 
+                        <form class="form-inline ml-auto" action="{{ url('student/search') }}" method="GET"> 
+                          <div class="md-form my-0">
+                            <input  id="title" type="search" class="form-control" name="search" value="{{ old('search') }}" required autocomplete="search" placeholder="Search" autofocus>
+                          </div>
+                          <button class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit">Search</button>
+                        </form>
+                      </th>
                   </tr>
                 </thead>
                 

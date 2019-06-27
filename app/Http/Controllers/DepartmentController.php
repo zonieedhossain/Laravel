@@ -14,6 +14,15 @@ class DepartmentController extends Controller
         $departments = Department::all();
         return view('department.index', compact('departments'));
     }
+    public function search(Request $request)
+    {
+       
+         $search =$request ->get ('search');
+       
+         $departments  = DB::table('departments')->where('title', 'like', '%' .$search. '%')->paginate(5);
+      
+        return view('department.index', ['departments'=>$departments]);
+    }
     public function create()
     {
         return view('department.create');
@@ -30,13 +39,15 @@ class DepartmentController extends Controller
         
         return redirect()->back()->with('status', ('New Department Create successfully'));
     }
+    
     public function edit($id)
-    {
+    {   
         $department = Department::find($id);
         return view('department.edit', compact('department'));
     }
     public function update(Request $request,$id)
     {
+        
         $this->validate($request, [
             'title' => 'required'
         ]);

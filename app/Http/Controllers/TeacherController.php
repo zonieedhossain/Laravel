@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Teacher;
 use App\Students;
 use App\Department;
 use App\Classes;
@@ -21,30 +22,28 @@ use App\Http\Requests;
 use Intervention\Image\ImageManagerStatic as Image;
 
 
-
-
-class StudentsController extends Controller
+class TeacherController extends Controller
 {
     public function index()
     {
-        $students = Students::all();
+        $teachers = Teacher::all();
         
-        return view('student.index', compact('students'));
+        return view('teacher.index', compact('teachers'));
     }
     public function create()
     {
-        $departments = Department::all();
+       
         $classes = Classes::all();
-        return view('student.create',compact('departments','classes'));
+        return view('teacher.create',compact('classes'));
     }
     public function search(Request $request)
     {
        
          $search =$request ->get ('search');
        
-         $students  = DB::table('students')->where('roll', 'like', '%' .$search. '%')->paginate(5);
+         $teachers  = DB::table('teachers')->where('subject', 'like', '%' .$search. '%')->paginate(5);
       
-        return view('student.index', ['students'=>$students]);
+        return view('teacher.index', ['teachers'=>$teachers]);
     }
     public function save(Request $request)
     {
@@ -53,16 +52,10 @@ class StudentsController extends Controller
             'name' =>'required',
             'phone_num' => 'required',
             'email' => 'required',
-            'roll' =>'required',
-            'reg_no' => 'required',
-            'image' => 'required', // required|image|mimes:jpeg,png,jpg,gif,svg|max:2048;
-            'department_name' => 'required',
-            'class_name' => 'required',
-            'father_name' => 'required',
-            'mother_name' =>'required',
+            'image' => 'required', // required|image|mimes:jpeg,png,jpg,gif,svg|max:2048
+            'subject' => 'required',
             'address' => 'required',
-            'guardian_num' => 'required',
-           
+
         ]);
     
         // $image = $request->file('image');
@@ -96,49 +89,42 @@ class StudentsController extends Controller
             $image = $request->file('image'); 
                        
             $filename=time() . '.' . $image->getClientOriginalExtension();
-            Image::make($image)->save(public_path('/uploads/students'.$filename));
+            Image::make($image)->save(public_path('/uploads/teachers'.$filename));
          
             $stdImage=$filename;
         }
       
-        DB::table('students')->insert([
+        DB::table('teachers')->insert([
             'name' => $request->name,
             'phone_num' => $request->phone_num,
             'email' => $request->email,
-            'roll' => $request->roll,
-            'reg_no' => $request->reg_no,
-            'department_name' => $request->department_name,
-            'class_name' => $request->class_name,
-            'father_name' => $request->father_name,
-            'mother_name' => $request->mother_name,
+            'subject' => $request->subject,
             'address' => $request->address,
-            'guardian_num' => $request->guardian_num,
             'image' => $stdImage,
         ]);
         
-        return redirect()->back()->with('status', ('New Student Details Create successfully'));
+        return redirect()->back()->with('status', ('New Teacher Details Create successfully'));
     }
     public function edit($id)
     {
-        $student = Students::find($id);
-        $departments = Department::all();
+        $teacher = Teacher::find($id);
         $classes = Classes::all();
-        return view('student.edit', compact('student','departments','classes'));
+        return view('teacher.edit', compact('teacher','classes'));
     }
     public function update(Request $request,$id)
     {
         $this->validate($request, [
-            'roll' => 'required'
+            'subject' => 'required'
         ]);
-        $std = Students::find($id);
+        $std = Teacher::find($id);
         $std->update($request->all());
-        return redirect()->back()->with('status', ('Student Details Updated successfully'));
+        return redirect()->back()->with('status', ('Teacher Details Updated successfully'));
     }
     public function delete($id)
     {
-        $std = Students::find($id);
+        $std = Teacher::find($id);
         $std->delete();
         
-        return redirect()->back()->with('status', ('Student Details Deleted successfully'));
+        return redirect()->back()->with('status', ('Teacher Details Deleted successfully'));
     }
 }

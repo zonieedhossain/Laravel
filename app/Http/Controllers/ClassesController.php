@@ -18,6 +18,15 @@ class ClassesController extends Controller
     {
         return view('class.create');
     }
+    public function search(Request $request)
+    {
+       
+         $search =$request ->get ('search');
+       
+         $classes  = DB::table('classes')->where('class', 'like', '%' .$search. '%')->paginate(5);
+      
+        return view('class.index', ['classes'=>$classes]);
+    }
     public function save(Request $request)
     {
         $this->validate($request, [

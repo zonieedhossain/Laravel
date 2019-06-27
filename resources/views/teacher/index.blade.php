@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title','Classes')
+@section('title','Teachers')
 
     @section('content')
-    <div class="card-header">Class List</div>
+    <div class="card-header">Teacher List</div>
        
         <table class="table">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col"> <a href=" {{ url('class/create')}} "> <button type="button" class="btn btn-dark">Add New Class</button></a></th>
+                    <th scope="col"> <a href=" {{ url('teacher/create')}} "> <button type="button" class="btn btn-dark">Add New Teacher</button></a></th>
                     <th> 
-                        <form class="form-inline ml-auto" action="{{ url('class/search') }}" method="GET"> 
+                        <form class="form-inline ml-auto" action="{{ url('teacher/search') }}" method="GET"> 
                           <div class="md-form my-0">
                             <input  id="title" type="search" class="form-control" name="search" value="{{ old('search') }}" required autocomplete="search" placeholder="Search" autofocus>
                           </div>
@@ -30,22 +30,28 @@
             <thead class="thead-dark">
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Class</th>
-                  <th scope="col">Subject</th>
-                  <th scope="col">Class Time</th>
+                  <th scope="col">Teacher Name</th>
+                  <th scope="col">Teacher Image</th>
+                  <th scope="col">Phone Number</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Subject Name</th>
+                  <th scope="col">Address</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-                  @foreach($classes as $class)
+                  @foreach($teachers as $teacher)
                 <tr>
-                <th scope="row">{{ $class->id }}</th>
-                  <td>{{ $class->class }}</td>
-                  <td>{{ $class->subject }}</td>
-                  <td>{{ $class->classtime }}</td>
+                <th scope="row">{{ $teacher->id }}</th>
+                  <td>{{ $teacher->name }}</td>
+                <td><img src="/uploads/teachers{{ $teacher->image }}" style="height: 50px; width=50px ;"></td>
+                  <td>{{ $teacher->phone_num }}</td>
+                  <td>{{ $teacher->email }}</td>
+                  <td>{{ $teacher->subject}}</td>
+                  <td>{{ $teacher->address }}</td>
                   <td>
-                  <a href=" {{ url('class/edit',$class->id) }} "> <button type="button" class="btn btn-success">Edit</button></a>
-                  <form id="delete-form-{{ $class->id }}" method="POST" action="{{ url('class/delete',$class->id) }}" style="display:none">
+                  <a href=" {{ url('teacher/edit',$teacher->id) }} "> <button type="button" class="btn btn-success">Edit</button></a>
+                  <form id="delete-form-{{ $teacher->id }}" method="POST" action="{{ url('teacher/delete',$teacher->id) }}" style="display:none">
                         {{  csrf_field ()}}
                         {{  method_field('DELETE')}}
                   </form>     
@@ -53,7 +59,7 @@
                         if(confirm('Are you sure, You what to delete this ??'))
                         {
                             event.preventDefault();
-                            document.getElementById('delete-form-{{ $class->id }}').submit();
+                            document.getElementById('delete-form-{{ $teacher->id }}').submit();
                         }
                         else
                         {
